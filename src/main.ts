@@ -72,6 +72,7 @@ const Happy = document.createElement("button");
 Happy.style.fontSize = '1em';
 Happy.style.opacity = '0.8';
 Happy.innerHTML = "";
+Happy.disabled = true;
 
 
 
@@ -289,6 +290,7 @@ function beginAction(){
   if(t){
     pop.innerHTML = "Byebye mommy ;_; ";}
   begin.style.display = 'none';
+  Happy.disabled = false;
   app.append(header,Butest, numDislay,growDislay,stress);
   //windows.append(B2);
   //B2.innerHTML = "meme";
