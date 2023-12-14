@@ -3,7 +3,7 @@ import "./style.css";
 //add click and growth counter
 let clickCount = 0;
 let netGrowth = 0;
-let stressRate = 30;
+let stressRate = 70;
 let upStress = 0.0001;
 let lasttime:number = 0;
 
@@ -34,7 +34,7 @@ numDislay.id = "num";
 
 //growth rate display
 const growDislay = document.createElement("div");
-growDislay.innerHTML = `Calming down ${netGrowth.toFixed(1)}% per second`;
+growDislay.innerHTML = "-";
 growDislay.id = "rate";
 
 const message = document.createElement("msg");
@@ -64,7 +64,9 @@ const Happy = document.createElement("button");
 //Close.style.borderRadius = '10000px';
 Happy.style.fontSize = '1em';
 Happy.style.opacity = '0.8';
-Happy.innerHTML = "Sing a song";
+Happy.innerHTML = "";
+
+
 
 const Close = document.createElement("button");
 //Close.style.borderRadius = '10000px';
@@ -148,7 +150,7 @@ const itemList: item[] = [
     dim:true
   },
   {
-    cost: 100,
+    cost: 50,
     growthRate:2.0,
     total:0,
     display:"",
@@ -217,17 +219,36 @@ t = true;
 if(t){
   createPopup(); }
 
+let hCounter: number = 0;
+let lightMag: string[] = [
+  "11","22","33","44","55","66"]
+let darkMsg: string[] = [
+  "1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20"
+]
 
+function Sing(){
+  if(hCounter<10){
+    updateGameName("header",lightMag[hCounter%5]);
+  }
+  else{
+  let randomNumber: number = Math.floor(Math.random() * 20);
+  updateGameName("header",darkMsg[randomNumber]);
+  stressRate+=2;}
+  hCounter++;
+}
+windows.append(Happy);
+Happy.disabled = true;
+Happy.addEventListener('click', Sing);
 
 function beginAction(){
   if(t){
-    pop.innerHTML = "Mom, help!!! HELP!!! ";}
+    pop.innerHTML = "Byebye mommy ;_; ";}
   begin.style.display = 'none';
   app.append(header,Butest, numDislay,growDislay,stress);
   windows.append(B2);
-  app.append(itemList[0].button);
-  itemList[0].button.addEventListener('click',()=>trackShop(itemList[0]));
-  //addButton(itemList[0].button); // build shop
+  //app.append(itemList[0].button);
+  //itemList[0].button.addEventListener('click',()=>trackShop(itemList[0]));
+  addButton(itemList); // build shop
   Butest.addEventListener('click', ()=>trackMainClick(itemList));
 }
 
@@ -256,7 +277,7 @@ function showPopup(t:boolean,s:string) {
 
 //FUNCTIONS
 //shop builder: add item from itemlist to game 
-/*function addButton(itemList: item[]){
+function addButton(itemList: item[]){
   for(const i in itemList){
     const k = itemList[i].button;
     k.disabled = true;
@@ -265,7 +286,7 @@ function showPopup(t:boolean,s:string) {
     k.addEventListener('click',()=>trackShop(itemList[i]));
   }
 
-}*/
+}
 
 //controls click counter and game title display
 function updateClickCount() {  
@@ -276,24 +297,28 @@ function updateClickCount() {
   }
   switch(clickCount.toFixed(0)){
     case '5':
-      //updateGameName("header","You were mad at me, right?");
+      updateGameName("header","Are you ready?");
       showPopup(t,"Send me some relx memes please");
       //app.append(jamaList[1].button);
       break;
     case '8': 
       //windows.append(B2);
-      updateGameName("header","");
-      showPopup(t,"Mom, hug me please---");
+      updateGameName("header","Kaz, put on this glasses for me please.");
+      showPopup(t,"Mom, hug me when I come back");
       break;
+    case '14': 
+      //windows.append(B2);
+      updateGameName("header","It wouldn't be very hurt, alright?");
+      showPopup(t,"Mom, hug me when I come back");      break;
     
     case '50':
-      updateGameName("header","KAZ NESTS THE HOUSE");
+      updateGameName("header","OK! Let's start the filling process!");
       break;
     case '600':
-      updateGameName("header","KAZ NESTS THE BLOCK");
+      updateGameName("header","KAZ ");
       break;
     case '10000':
-      updateGameName("header","KAZ NESTS THE NEIGHBORHOOD");
+      updateGameName("header","KAZ STOP KAZ!!!!!!");
       break;
   }
 }
@@ -309,7 +334,7 @@ function updateGameName(t:string,j: string) {
 //tracks click count number and connects shop and click display 
 function trackMainClick(itemList:item[]) {
   clickCount+=0.2;
-  stressRate -=0.2;
+  stressRate -=0.1;
   updateShop(itemList);  
   updateClickCount();
 
@@ -333,7 +358,7 @@ function trackShop(i:item){
     console.log("pop");
     showPopup(t,'loop');   
     clickCount -= i.cost;
-    i.cost = i.cost*1.15;
+    i.cost = i.cost*1.1;
     i.button.innerHTML = i.display+i.cost.toFixed(1)+i.msgKey3;
     netGrowth += i.growthRate;
     i.total += 1;    
@@ -344,7 +369,7 @@ function trackShop(i:item){
     i.msg.textContent = i.msgKey1 + i.total + i.msgKey2;
     
 
-    growDislay.innerHTML = `Nest growth rate + ${netGrowth.toFixed(1)} m²/sec`
+    growDislay.innerHTML = `Calming down ${netGrowth.toFixed(1)}% per second`;
 
     if(clickCount < i.cost){      
       i.button.disabled=true;
@@ -362,23 +387,40 @@ function movediv(time:number){
   const toadd = passed*0.001* netGrowth;
 
   clickCount += toadd;
-  stressRate+= passed*upStress;
-  if(stressRate>=31){windows.append(jamaList[0].button);}
-  if(stressRate <=29){
-    windows.append(Happy);
-    Happy.addEventListener('click', ()=>{updateGameName("header","Kaz, stop, Kaz!")});
+  const stressHolder = (passed*upStress) - netGrowth*0.001;
+
+  stressRate+= stressHolder;
+  if(stressRate>=99){
+    upStress=0;
   }
-  /*if(stressRate <=25){
+  if(stressRate>=90){
+    windows.append(jamaList[0].button);
+    jamaList[0].button.innerHTML="Tear down a bit";
+    stressRate-=5;
+  }
+  if(stressRate <=68){
+    updateGameName("header","Open- up a bit more for me please! Thanks");
+    upStress +=0.005;
+  }
+  if(stressRate <=65){
+    updateGameName("header","It's not that hurt, right?");
+    Happy.innerHTML = "Try to talk a few wods";    
+  }
+  if(stressRate <=50){
+    if(Happy){
+      Happy.disabled = false;
+      updateGameName("header","You feel better, right?");
+      Happy.innerHTML = "Talk a few wods";   
+    
+  }}
+  if(stressRate <=40){
     if(Happy){
     Happy.innerHTML = "Blast a laugh";
-    Happy.addEventListener('mouseover', ()=>{updateGameName("header","Oops, you scared me!")});}
-  }*/
+    
+  }}
 
   updateClickCount();  
   updateShop(itemList);
   requestAnimationFrame(movediv);
 }
 ////////////////
-
-
-
