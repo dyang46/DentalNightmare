@@ -38,11 +38,11 @@ growDislay.innerHTML = "-";
 growDislay.id = "rate";
 
 const message = document.createElement("msg");
-message.innerHTML = "Nesting kid +1";
+message.innerHTML = "";
 message.id = "message";
 
 const pop = document.createElement("msg");
-pop.innerHTML = "I'll talk to you later if I still alive after this...";
+pop.innerHTML = "I'll talk to you later if I'm still alive after this...";
 //pop.id = "message";
 
 const stress = document.createElement("msg");
@@ -139,7 +139,7 @@ interface item{
 const itemList: item[] = [
   {
     cost: 10,
-    growthRate:0.2,
+    growthRate:0.05,
     total:0,
     display:"",
     msgKey1:" You've spined your toes ",
@@ -150,37 +150,37 @@ const itemList: item[] = [
     dim:true
   },
   {
-    cost: 50,
-    growthRate:2.0,
+    cost: 20,
+    growthRate:1,
     total:0,
     display:"",
-    msgKey1:" Nesting kid #",
-    msgKey2:" is born!",
-    msgKey3:"  (╯✧▽✧)╯ Ask your kids to help",
+    msgKey1:" She grabed the #",
+    msgKey2:" drill",
+    msgKey3:"  (╯✧▽✧)╯ Count Dr. Riley's hand action",
     button:document.createElement("button"),
     msg:document.createElement("msg"),
     dim:true
   },
   {
-    cost: 1000,
-    growthRate:50.0,
+    cost: 100,
+    growthRate:2,
     total:0,
-    display:"Nesting meeting! -",
-    msgKey1:" New nesting plan #",
-    msgKey2:" has made!",
-    msgKey3:"  <(￣︶￣)> ",
+    display:"",
+    msgKey1:" New tech product #QWY5",
+    msgKey2:" has been released!",
+    msgKey3:"  <(￣︶￣)> Listen to TV ads",
     button:document.createElement("button"),
     msg:document.createElement("msg"),
     dim:true
 
   },
   { 
-    cost: 3000,
-    growthRate:100.0,
+    cost: 200,
+    growthRate:3,
     total:0,
-    display:"Nest refactoring! -",
-    msgKey1:" Efficient nest @",
-    msgKey2:"  built!",
+    display:"",
+    msgKey1:" (*&^^&*VFGTYH",
+    msgKey2:"  &$%^YTFH",
     msgKey3:"  (*꒦ິ꒳꒦ີ) ",
     button:document.createElement("button"),
     msg:document.createElement("msg"),
@@ -188,12 +188,12 @@ const itemList: item[] = [
 
   },
   { 
-    cost: 5000,
-    growthRate:150.0,
+    cost: 500,
+    growthRate:10.0,
     total:0,
-    display:"INTERNEST INTERNEST! -",
-    msgKey1:" ",
-    msgKey2:"D nesting!",
+    display:"",
+    msgKey1:" Ants have ",
+    msgKey2:" feet",
     msgKey3:"  ☆*:.｡.o(≧▽≦)o.｡.:*☆",
     button:document.createElement("button"),
     msg:document.createElement("msg"),
@@ -220,32 +220,61 @@ if(t){
   createPopup(); }
 
 let hCounter: number = 0;
-let lightMag: string[] = [
-  "11","22","33","44","55","66"]
+let lightMsg: string[] = [
+  "Back for a tune-up? Let's make that smile sparkle again!",
+  "Just like a car, every smile sometimes needs a little refilling.",
+  "Round two for your tooth, but don't worry, it'll be good as new!",
+  "We're not just filling a tooth, we're restoring your brilliant smile!",
+  "A little refill today for a lot more smiles tomorrow.",
+  "Think of this as a spa day for your tooth, a little pampering is due!"
+];
 let darkMsg: string[] = [
-  "1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20"
-]
+  "This might hurt more than last time...",
+  "Your screams will echo, but no one will hear.",
+  "The tooth's pain is just the beginning.",
+  "Feel the drill, it's like whispers from the abyss.",
+  "I'll carve a smile that will never fade.",
+  "Each refill brings you closer to the eternal silence.",
+  "You can't escape the chair once the filling starts.",
+  "The deeper I drill, the darker it gets.",
+  "Your mouth can't scream when it's wide open.",
+  "Shh, the pain is just a lullaby.",
+  "This tooth will haunt more than just your mouth.",
+  "Feel the shadows wrap around each tooth.",
+  "The filling is permanent, like your stay here.",
+  "Not just filling a tooth, I'm sealing your fate.",
+  "This won't be just a refill, but a full takeover.",
+  "As the drill whirs, so does the void inside.",
+  "Your tooth's cavity is nothing compared to the void.",
+  "The chair is a portal, the drill is the key.",
+  "With each refill, a part of you stays forever.",
+  "Don't worry, this pain is just the prelude."
+];
+
+windows.append(message,Happy);
+//Happy.disabled = false;
+Happy.addEventListener('click', Sing);
 
 function Sing(){
   if(hCounter<10){
-    updateGameName("header",lightMag[hCounter%5]);
+    console.log("HAPPY");
+    message.innerHTML =lightMsg[hCounter%5];
   }
   else{
   let randomNumber: number = Math.floor(Math.random() * 20);
-  updateGameName("header",darkMsg[randomNumber]);
+  message.innerHTML = darkMsg[randomNumber];
   stressRate+=2;}
   hCounter++;
 }
-windows.append(Happy);
-Happy.disabled = true;
-Happy.addEventListener('click', Sing);
+
 
 function beginAction(){
   if(t){
     pop.innerHTML = "Byebye mommy ;_; ";}
   begin.style.display = 'none';
   app.append(header,Butest, numDislay,growDislay,stress);
-  windows.append(B2);
+  //windows.append(B2);
+  //B2.innerHTML = "meme";
   //app.append(itemList[0].button);
   //itemList[0].button.addEventListener('click',()=>trackShop(itemList[0]));
   addButton(itemList); // build shop
@@ -298,7 +327,7 @@ function updateClickCount() {
   switch(clickCount.toFixed(0)){
     case '5':
       updateGameName("header","Are you ready?");
-      showPopup(t,"Send me some relx memes please");
+      showPopup(t,"Send me some relax memes please");
       //app.append(jamaList[1].button);
       break;
     case '8': 
@@ -309,16 +338,23 @@ function updateClickCount() {
     case '14': 
       //windows.append(B2);
       updateGameName("header","It wouldn't be very hurt, alright?");
-      showPopup(t,"Mom, hug me when I come back");      break;
-    
+      showPopup(t,"Uhhh, It's literally my first time!");      break;
+    case '30':      //windows.append(B2);
+      
+      showPopup(t,"OMG I'm shaking.");      break;
+    case '32':       
+      showPopup(t,"My toes are not relaxed.");      break;
     case '50':
-      updateGameName("header","OK! Let's start the filling process!");
+      showPopup(t,"I'm sweating!!");
       break;
-    case '600':
-      updateGameName("header","KAZ ");
+    case '60':
+      showPopup(t,"Kaz is gonna be alright!!!");
       break;
-    case '10000':
-      updateGameName("header","KAZ STOP KAZ!!!!!!");
+      case '80':
+        showPopup(t,"Kaz is gonna be alright!!!");
+        break;
+    case '1000':
+      showPopup(t,"@#%^&");
       break;
   }
 }
@@ -352,16 +388,18 @@ function updateShop(itemlist:item[]){
   }  
 }
 
+
 //price keeper & shop display
 function trackShop(i:item){ 
     t=true;  
     console.log("pop");
-    showPopup(t,'loop');   
+    showPopup(t,'AHHHHHHHHHH');   
     clickCount -= i.cost;
     i.cost = i.cost*1.1;
     i.button.innerHTML = i.display+i.cost.toFixed(1)+i.msgKey3;
     netGrowth += i.growthRate;
     i.total += 1;    
+    stressRate -= i.growthRate*10;
     if(i.dim == true){            
       app.append(i.msg);
       i.dim = false;
@@ -369,15 +407,22 @@ function trackShop(i:item){
     i.msg.textContent = i.msgKey1 + i.total + i.msgKey2;
     
 
-    growDislay.innerHTML = `Calming down ${netGrowth.toFixed(1)}% per second`;
+    growDislay.innerHTML = `Calming down ${(netGrowth*0.01).toFixed(3)}% per second`;
 
     if(clickCount < i.cost){      
       i.button.disabled=true;
     }
 }
 
+function updateChecker(checker: number,negstress: number,bond: number){
+  if(bond<checker){
+    stressRate -= negstress;
+  }
+  bond +=1;
+}
 
-
+let tearCounter : number = 0;
+jamaList[0].button.addEventListener('mouseover',()=>{updateChecker(5,5,tearCounter)});
 //tracks time in second
 ////////////// This is inspired by Michael Long from CMPM121 Fall 2023
 function movediv(time:number){
@@ -392,32 +437,56 @@ function movediv(time:number){
   stressRate+= stressHolder;
   if(stressRate>=99){
     upStress=0;
+    stressRate =99;
+    //updateGameName("header","Kaz! Kaz!!! Wake up!! NOOOOO ")
   }
   if(stressRate>=90){
     windows.append(jamaList[0].button);
     jamaList[0].button.innerHTML="Tear down a bit";
-    stressRate-=5;
+    upStress =0.0001;
+    
   }
+  if(stressRate >=80){
+    updateGameName("header","Please relax. We can not start if you are shaking.");
+    upStress =0.0004;
+  }
+  if(stressRate <=75){
+    updateGameName("header","Please relax your face muscle.");
+
+  }
+  
   if(stressRate <=68){
     updateGameName("header","Open- up a bit more for me please! Thanks");
-    upStress +=0.005;
+
+    upStress =0.0007;
   }
   if(stressRate <=65){
-    updateGameName("header","It's not that hurt, right?");
-    Happy.innerHTML = "Try to talk a few wods";    
+    updateGameName("header","OK! Kaz, let's start the filling.");
+    Happy.innerHTML = "Try to talk a few words";    
   }
-  if(stressRate <=50){
+  if(stressRate <=60){
     if(Happy){
-      Happy.disabled = false;
-      updateGameName("header","You feel better, right?");
+      //Happy.disabled = false;
+      updateGameName("header","It won't be too hurt, I promise");
       Happy.innerHTML = "Talk a few wods";   
     
   }}
-  if(stressRate <=40){
+  if(stressRate <=50){
     if(Happy){
-    Happy.innerHTML = "Blast a laugh";
-    
+    updateGameName("header","You are relaxed! Good job");
+    Happy.innerHTML = "Blast a laugh";    
   }}
+  if(stressRate <=25){
+   
+    Happy.innerHTML = "Sing a song";
+
+  }
+  if(stressRate <=10){
+    upStress=0;
+    stressRate =10;
+    updateGameName("header","Kaz! Kaz!!! STOP LAUGHING!!! YOU ARE BLEEDING!! ")
+        
+  }
 
   updateClickCount();  
   updateShop(itemList);
