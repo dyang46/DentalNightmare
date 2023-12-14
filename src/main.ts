@@ -49,6 +49,13 @@ const stress = document.createElement("msg");
 stress.innerHTML = `current stress rate ${stressRate.toFixed(1)}%`;
 //pop.id = "message";
 
+let  away:number = 0;
+let fillingRate:number = 0;
+const fillingStatus = document.createElement("msg");
+fillingStatus.innerHTML = `${away.toFixed(1)}% filling finished`;
+fillingStatus.style.position= 'absolute';
+//pop.id = "message";
+
 const begin = document.createElement("button"); //begining text
 begin.innerHTML = "Please take a seat, I will be right back with you.";
 begin.id = "begin";
@@ -80,6 +87,11 @@ popup.id = 'popupMenu';
 popup.style.opacity = '0.6';
 popup.append(pop,Close);
 
+
+if (away >= 100){
+  pop.innerHTML = "That's it for today!"
+  fillingStatus.innerHTML = `Filled: 100%`;
+}
 
 interface jama{
   button:HTMLButtonElement;
@@ -254,6 +266,11 @@ let darkMsg: string[] = [
 windows.append(message,Happy);
 //Happy.disabled = false;
 Happy.addEventListener('click', Sing);
+
+function updateFilling(){
+  windows.append(fillingStatus);
+  fillingStatus.innerHTML = `${away.toFixed(1)}% filling finished`;
+}
 
 function Sing(){
   if(hCounter<10){
@@ -432,9 +449,11 @@ function movediv(time:number){
   const toadd = passed*0.001* netGrowth;
 
   clickCount += toadd;
+  away += passed*0.001* fillingRate;
   const stressHolder = (passed*upStress) - netGrowth*0.001;
 
   stressRate+= stressHolder;
+
   if(stressRate>=99){
     upStress=0;
     stressRate =99;
@@ -452,16 +471,18 @@ function movediv(time:number){
   }
   if(stressRate <=75){
     updateGameName("header","Please relax your face muscle.");
-
+    
   }
   
   if(stressRate <=68){
     updateGameName("header","Open- up a bit more for me please! Thanks");
-
+    fillingRate=0;
     upStress =0.0007;
   }
   if(stressRate <=65){
+    fillingRate = 0.1;
     updateGameName("header","OK! Kaz, let's start the filling.");
+    
     Happy.innerHTML = "Try to talk a few words";    
   }
   if(stressRate <=60){
@@ -472,6 +493,7 @@ function movediv(time:number){
     
   }}
   if(stressRate <=50){
+    fillingRate = 0;
     if(Happy){
     updateGameName("header","You are relaxed! Good job");
     Happy.innerHTML = "Blast a laugh";    
@@ -487,7 +509,7 @@ function movediv(time:number){
     updateGameName("header","Kaz! Kaz!!! STOP LAUGHING!!! YOU ARE BLEEDING!! ")
         
   }
-
+  updateFilling();
   updateClickCount();  
   updateShop(itemList);
   requestAnimationFrame(movediv);
